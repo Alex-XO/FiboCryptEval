@@ -20,6 +20,8 @@ dependencies {
     // Библиотека для графиков XChart
     implementation("org.knowm.xchart:xchart:3.8.2")
 
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+
     // Для тестов
     testImplementation(kotlin("test"))
 }
