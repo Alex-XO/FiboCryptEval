@@ -17,6 +17,9 @@ dependencies {
     // Логирование через SLF4J + SimpleLogger
     implementation("org.slf4j:slf4j-simple:2.0.9")
 
+    // Библиотека для графиков XChart
+    implementation("org.knowm.xchart:xchart:3.8.2")
+
     // Для тестов
     testImplementation(kotlin("test"))
 }
