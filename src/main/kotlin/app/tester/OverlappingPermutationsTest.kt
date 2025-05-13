@@ -27,7 +27,7 @@ class OverlappingPermutationsTest : GeneratorTest {
         // Вычисляем χ²
         var chiSquare = 0.0
         for (count in counts.values) {
-            chiSquare += (count - expected) * (count - expected) / expected
+            chiSquare += (count - expected).let { it * it / expected }
         }
 
         return 1.0 / (1.0 + chiSquare)

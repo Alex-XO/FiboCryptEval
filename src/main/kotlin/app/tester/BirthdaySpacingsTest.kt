@@ -22,9 +22,7 @@ class BirthdaySpacingsTest : GeneratorTest {
         // Считаем количество совпадений интервалов
         var collisions = 0
         for (i in 1 until birthdays.size) {
-            if (birthdays[i] == birthdays[i - 1]) {
-                collisions++
-            }
+            if (birthdays[i] == birthdays[i - 1]) collisions++
         }
 
         // Чем меньше коллизий, тем лучше

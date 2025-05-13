@@ -13,13 +13,14 @@ class MainView(private val primaryStage: Stage) {
         val testButton = Button("🔬 Тестировать генераторы").apply {
             setOnAction {
                 // Переключение на окно тестирования генераторов
-                primaryStage.scene = Scene(TestGeneratorsView(), 800.0, 600.0)
+                primaryStage.scene = Scene(TestGeneratorsView(primaryStage), 800.0, 600.0)
             }
         }
 
         val encryptButton = Button("🔐 Зашифровать текст").apply {
             setOnAction {
-                // TODO: реализовать переход на EncryptView
+                // Переход на Окно шифрования с выбором генератора
+                primaryStage.scene = Scene(EncryptView(primaryStage = primaryStage, fromTestView = false), 800.0, 600.0)
             }
         }
 

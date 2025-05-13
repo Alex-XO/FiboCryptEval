@@ -2,7 +2,6 @@ package app.tester
 
 import app.generator.RandomGenerator
 import kotlin.math.pow
-import kotlin.math.sqrt
 import kotlin.math.abs
 import kotlin.math.PI
 
@@ -18,11 +17,7 @@ class MonteCarloTest : GeneratorTest {
             // Генерация двух случайных чисел от 0 до 1
             val x = (generator.nextByte().toInt() and 0xFF) / 255.0
             val y = (generator.nextByte().toInt() and 0xFF) / 255.0
-
-            // Проверяем, попала ли точка в круг
-            if (x.pow(2) + y.pow(2) <= 1.0) {
-                insideCircle++
-            }
+            if (x.pow(2) + y.pow(2) <= 1.0) insideCircle++
         }
 
         // Оценка числа π

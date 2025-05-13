@@ -19,7 +19,7 @@ object ChartDrawer {
         chart.styler.legendPosition = Styler.LegendPosition.InsideNE
 
         val names = results.map { it.name }
-        val scores = results.map { it.score.toDouble() }
+        val scores = results.map { it.score }
 
         chart.addSeries("Результаты", names, scores)
 
