@@ -1,8 +1,12 @@
 package app.generator
 
-class FishGenerator : RandomGenerator {
+class FishGenerator(seed: Long) : RandomGenerator {
     private var a = 1L
     private var b = 1L
+
+    init {
+        reseed(seed)
+    }
 
     override fun nextByte(): Byte {
         val next = (a * b) % 256

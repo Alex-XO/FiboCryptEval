@@ -1,8 +1,12 @@
 package app.generator
 
-class LastDigitFibonacciGenerator : RandomGenerator {
+class LastDigitFibonacciGenerator(seed: Long) : RandomGenerator {
     private var a = 0
     private var b = 1
+
+    init {
+        reseed(seed)
+    }
 
     override fun nextByte(): Byte {
         val next = (a + b) % 10

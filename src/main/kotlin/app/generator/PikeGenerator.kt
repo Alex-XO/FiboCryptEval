@@ -1,7 +1,11 @@
 package app.generator
 
-class PikeGenerator : RandomGenerator {
+class PikeGenerator(seed: Long) : RandomGenerator {
     private var state = LongArray(2)
+
+    init {
+        reseed(seed)
+    }
 
     override fun nextByte(): Byte {
         val next = (state[0] + state[1]) % 256

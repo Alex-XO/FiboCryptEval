@@ -1,23 +1,28 @@
 package app.service
 
+import app.model.EvaluationResult
 import org.knowm.xchart.CategoryChartBuilder
-import org.knowm.xchart.SwingWrapper
+import org.knowm.xchart.XChartPanel
+import org.knowm.xchart.style.Styler
+import javax.swing.JPanel
 
-// Класс для отображения результатов на графике
 object ChartDrawer {
-
-    fun drawScores(generatorNames: List<String>, scores: List<Double>) {
+    fun buildChart(results: List<EvaluationResult>): JPanel {
         val chart = CategoryChartBuilder()
-            .width(800)
-            .height(600)
-            .title("Результаты тестирования генераторов")
-            .xAxisTitle("Генераторы")
+            .width(600)
+            .height(400)
+            .title("Оценка генераторов")
+            .xAxisTitle("Генератор")
             .yAxisTitle("Баллы")
             .build()
 
-        chart.addSeries("Оценка качества", generatorNames, scores)
+        chart.styler.legendPosition = Styler.LegendPosition.InsideNE
 
-        // Отобразить окно с графиком
-        SwingWrapper(chart).displayChart()
+        val names = results.map { it.name }
+        val scores = results.map { it.score.toDouble() }
+
+        chart.addSeries("Результаты", names, scores)
+
+        return XChartPanel(chart)
     }
 }
