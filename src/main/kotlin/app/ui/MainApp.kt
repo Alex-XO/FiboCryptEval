@@ -7,7 +7,7 @@ import javafx.stage.Stage
 class MainApp : Application() {
     override fun start(primaryStage: Stage) {
         val mainView = MainView(primaryStage)
-        val scene = Scene(mainView.root, 500.0, 300.0)
+        val scene = Scene(mainView.root, 650.0, 450.0)
         primaryStage.title = "FiboCryptEval"
         primaryStage.scene = scene
         primaryStage.show()

@@ -108,13 +108,13 @@ class TestGeneratorsView(private val primaryStage: Stage) : VBox() {
 
         val encryptButton = Button("Зашифровать с лучшим генератором").apply {
             setOnAction {
-                primaryStage.scene = Scene(EncryptView(primaryStage = primaryStage, fromTestView = false), 800.0, 600.0)
+                primaryStage.scene = Scene(EncryptView(primaryStage = primaryStage), 650.0, 450.0)
             }
         }
 
         val backButton = Button("⬅ Назад в меню").apply {
             setOnAction {
-                primaryStage.scene = Scene(MainView(primaryStage).root, 500.0, 300.0)
+                primaryStage.scene = Scene(MainView(primaryStage).root, 650.0, 450.0)
             }
         }
 
