@@ -24,12 +24,6 @@ class MainView(private val primaryStage: Stage) {
             }
         }
 
-        val reportButton = Button("📁 Показать отчёты").apply {
-            setOnAction {
-                // TODO: реализовать переход на ReportView
-            }
-        }
-
-        children.addAll(testButton, encryptButton, reportButton)
+        children.addAll(testButton, encryptButton)
     }
 }
