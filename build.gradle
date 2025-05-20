@@ -1,31 +1,42 @@
 plugins {
-    id 'application'                                     // Позволяет запускать приложение с mainClassName
-    id 'org.jetbrains.kotlin.jvm' version '1.9.10'       // Kotlin-плагин
-    id 'org.openjfx.javafxplugin' version '0.1.0'        // JavaFX-плагин для Groovy DSL
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.10'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // для fat JAR
 }
 
 group = 'org.example'
 version = '1.0'
 
 repositories {
-    mavenCentral() // Основное хранилище зависимостей
+    mavenCentral()
 }
 
 javafx {
     version = "21"
-    modules = [ "javafx.controls", "javafx.fxml", "javafx.swing" ] // Модули JavaFX, используемые в UI
+    modules = [ "javafx.controls", "javafx.fxml", "javafx.swing" ]
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib" // Базовая библиотека Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "org.slf4j:slf4j-simple:2.0.9"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+    implementation "org.knowm.xchart:xchart:3.8.2"
 
-    implementation "org.slf4j:slf4j-simple:2.0.9"        // Логирование через SLF4J (реализация simple)
-    implementation "org.jetbrains.kotlin:kotlin-reflect" // Для рефлексии Kotlin (нужен для createInstance и т.п.)
-    implementation "org.knowm.xchart:xchart:3.8.2"       // Построение графиков (для отчётов и визуализации)
-
-    testImplementation "org.jetbrains.kotlin:kotlin-test" // Поддержка unit-тестов на Kotlin
+    testImplementation "org.jetbrains.kotlin:kotlin-test"
 }
 
 application {
-    mainClassName = 'app.ui.MainKt' // Точка входа в JavaFX-приложение
+    mainClassName = 'app.ui.MainKt'
 }
+
+shadowJar {
+    archiveBaseName.set('FiboCryptEval')
+    archiveClassifier.set('')
+    archiveVersion.set('1.0')
+    manifest {
+        attributes 'Main-Class': 'app.ui.MainKt'
+    }
+}
+
+build.dependsOn shadowJar

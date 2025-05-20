@@ -5,7 +5,7 @@ import app.generator.SeededGenerator
 object AppContext {
     lateinit var bestGenerator: SeededGenerator
 
-    var fixedSeed: Boolean = true
+    var fixedSeed: Boolean = false
 
     val seeds: List<Long> by lazy {
         if (fixedSeed) {
