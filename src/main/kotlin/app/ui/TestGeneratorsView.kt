@@ -18,6 +18,7 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.cell.PropertyValueFactory
 import app.generator.SeededGenerator
+import javafx.application.Platform
 
 class TestGeneratorsView(private val primaryStage: Stage) : VBox() {
 
@@ -102,8 +103,9 @@ class TestGeneratorsView(private val primaryStage: Stage) : VBox() {
         AppContext.bestGenerator = seededBest
 
         val chartPanel = ChartDrawer.buildChart(results)
-        val swingNode = SwingNode().apply {
-            content = chartPanel
+        val swingNode = SwingNode()
+        Platform.runLater {
+            swingNode.content = chartPanel
         }
 
         val encryptButton = Button("Зашифровать с лучшим генератором").apply {
