@@ -97,7 +97,8 @@ class TestGeneratorsView(private val primaryStage: Stage) : VBox() {
         }
 
 
-        val results: List<EvaluationResult> = GeneratorEvaluator.evaluate(generators, tests)
+        val weights = requireNotNull(AppContext.requirements) { "Weights not initialized" }
+        val results: List<EvaluationResult> = GeneratorEvaluator.evaluate(generators, tests, weights)
         val best = results.first()
         val seededBest = generators.first { it.name == best.name }
         AppContext.bestGenerator = seededBest

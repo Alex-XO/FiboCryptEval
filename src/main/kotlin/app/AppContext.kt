@@ -1,9 +1,11 @@
 package app
 
 import app.generator.SeededGenerator
+import app.model.UserRequirements
 
 object AppContext {
     lateinit var bestGenerator: SeededGenerator
+    var requirements: UserRequirements? = null
 
     var fixedSeed: Boolean = false
 

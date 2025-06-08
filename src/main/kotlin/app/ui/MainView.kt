@@ -7,6 +7,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
 import javafx.scene.text.Font
+import javafx.scene.text.Text
 import javafx.stage.Stage
 
 class MainView(private val primaryStage: Stage) {
@@ -15,26 +16,24 @@ class MainView(private val primaryStage: Stage) {
         padding = Insets(40.0)
         alignment = Pos.CENTER
 
-        // Заголовок
         val title = Label("FiboCryptEval").apply {
             font = Font.font(24.0)
         }
 
-        // Кнопки
-        val testButton = Button("🔬 Тестировать генераторы").apply {
+        val description = Text(
+            "Эта программа позволяет оценить качество генераторов случайных чисел " +
+                    "и использовать лучший из них для шифрования текста методом XOR с последующей Base64 кодировкой."
+        ).apply {
+            wrappingWidth = 600.0
+        }
+
+        val startButton = Button("🚀 Начать шифрование").apply {
             prefWidth = 250.0
             setOnAction {
-                primaryStage.scene = Scene(TestGeneratorsView(primaryStage), 650.0, 450.0)
+                primaryStage.scene = Scene(RequirementsView(primaryStage), 650.0, 500.0)
             }
         }
 
-        val encryptButton = Button("🔐 Зашифровать текст").apply {
-            prefWidth = 250.0
-            setOnAction {
-                primaryStage.scene = Scene(EncryptView(primaryStage), 650.0, 450.0)
-            }
-        }
-
-        children.addAll(title, testButton, encryptButton)
+        children.addAll(title, description, startButton)
     }
 }

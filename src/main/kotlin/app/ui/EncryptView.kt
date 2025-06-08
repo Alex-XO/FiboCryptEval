@@ -1,10 +1,8 @@
 package app.ui
 
 import app.AppContext
-import app.generator.SeededGenerator
 import app.model.EncryptionResult
 import app.service.Encryptor
-import app.util.allGenerators
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.Scene
@@ -13,16 +11,14 @@ import javafx.scene.layout.VBox
 import javafx.scene.text.Font
 import javafx.scene.text.Text
 import javafx.stage.Stage
-import kotlin.random.Random
 
 class EncryptView(
     private val primaryStage: Stage,
-    private val fromTests: Boolean = false
-) : VBox() {
+    private val fromTests: Boolean = false) : VBox(20.0) {
 
     init {
-        spacing = 20.0
         padding = Insets(20.0)
+        alignment = Pos.TOP_LEFT
 
         val title = Label("🔐 Шифрование текста").apply {
             font = Font.font(20.0)
@@ -34,29 +30,8 @@ class EncryptView(
             maxWidth = 400.0
         }
 
-        val generatorLabel = Label("Выберите генератор:")
-        val generatorSelector = ComboBox<SeededGenerator>()
-
-        if (!fromTests) {
-            val generators = allGenerators(List(5) { Random.nextLong() })
-            generatorSelector.items.addAll(generators)
-
-            generatorSelector.setCellFactory {
-                object : ListCell<SeededGenerator>() {
-                    override fun updateItem(item: SeededGenerator?, empty: Boolean) {
-                        super.updateItem(item, empty)
-                        text = if (empty || item == null) "" else item.name
-                    }
-                }
-            }
-            generatorSelector.buttonCell = object : ListCell<SeededGenerator>() {
-                override fun updateItem(item: SeededGenerator?, empty: Boolean) {
-                    super.updateItem(item, empty)
-                    text = if (empty || item == null) "" else item.name
-                }
-            }
-
-            generatorSelector.promptText = "Выберите генератор"
+        val generatorInfo = Label().apply {
+            font = Font.font(14.0)
         }
 
         val resultArea = Text()
@@ -69,17 +44,12 @@ class EncryptView(
                     return@setOnAction
                 }
 
-                val seeded = if (fromTests) {
-                    AppContext.bestGenerator
-                } else {
-                    val selected = generatorSelector.selectionModel.selectedItem
-                    if (selected == null) {
-                        resultArea.text = "Выберите генератор"
-                        return@setOnAction
-                    }
-                    selected
+                if (!AppContext.isInitialized()) {
+                    resultArea.text = "Генератор не выбран"
+                    return@setOnAction
                 }
 
+                val seeded = AppContext.bestGenerator
                 val generator = seeded.constructor(seeded.seed)
                 val encryptor = Encryptor(generator, seeded.seed)
                 val result: EncryptionResult = encryptor.encrypt(text)
@@ -90,34 +60,28 @@ class EncryptView(
 
         val backButton = Button("⬅ Назад в меню").apply {
             setOnAction {
+                AppContext.requirements = null
                 primaryStage.scene = Scene(MainView(primaryStage).root, 650.0, 450.0)
             }
         }
 
-        val layout = VBox(12.0).apply {
-            alignment = Pos.TOP_LEFT
-            padding = Insets(10.0)
-            children.add(title)
-
-            children.add(VBox(5.0).apply {
-                children.addAll(inputLabel, inputField)
-            })
-
-            if (!fromTests) {
-                children.add(VBox(5.0).apply {
-                    children.addAll(generatorLabel, generatorSelector)
-                })
-            }
-
-            children.add(encryptButton)
-
-            children.add(VBox(5.0).apply {
-                children.addAll(Label("Результат:"), resultArea)
-            })
-
-            children.add(backButton)
+        // Показываем информацию о генераторе
+        if (AppContext.isInitialized()) {
+            val seeded = AppContext.bestGenerator
+            generatorInfo.text = "Генератор: ${seeded.name} (seed: ${seeded.seed})"
+        } else {
+            generatorInfo.text = "Генератор: не выбран"
         }
 
-        children.add(layout)
+        children.addAll(
+            title,
+            inputLabel,
+            inputField,
+            generatorInfo,
+            encryptButton,
+            Label("Результат:"),
+            resultArea,
+            backButton
+        )
     }
 }
