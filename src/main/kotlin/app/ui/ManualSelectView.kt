@@ -37,6 +37,8 @@ class ManualSelectView(private val primaryStage: Stage) : VBox(20.0) {
             font = Font.font(18.0)
         }
 
+        val threshold = 0.15
+
         val generatorSelector = ComboBox<ScoredGenerator>().apply {
             items.addAll(generators)
 
@@ -44,7 +46,17 @@ class ManualSelectView(private val primaryStage: Stage) : VBox(20.0) {
                 object : ListCell<ScoredGenerator>() {
                     override fun updateItem(item: ScoredGenerator?, empty: Boolean) {
                         super.updateItem(item, empty)
-                        text = if (empty || item == null) "" else item.generator.name
+                        if (empty || item == null) {
+                            text = ""
+                            style = ""
+                        } else {
+                            text = item.generator.name
+                            style = if (item.totalScore < threshold) {
+                                "-fx-text-fill: red;"
+                            } else {
+                                ""
+                            }
+                        }
                     }
                 }
             }
