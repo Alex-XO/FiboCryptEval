@@ -8,6 +8,7 @@ import javafx.scene.control.Label
 import javafx.scene.layout.VBox
 import javafx.scene.text.Font
 import javafx.scene.text.Text
+import javafx.scene.text.TextAlignment
 import javafx.stage.Stage
 
 class MainView(private val primaryStage: Stage) {
@@ -25,6 +26,7 @@ class MainView(private val primaryStage: Stage) {
                     "и использовать лучший из них для шифрования текста методом XOR с последующей Base64 кодировкой."
         ).apply {
             wrappingWidth = 600.0
+            textAlignment = TextAlignment.CENTER
         }
 
         val startButton = Button("🚀 Начать шифрование").apply {
